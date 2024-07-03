@@ -1,0 +1,174 @@
+TASK -3
+
+
+
+INDEX.HTML
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registrationForm" action="#" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <span class="error" id="usernameError"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error" id="emailError"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <span class="error" id="passwordError"></span>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span class="error" id="confirmPasswordError"></span>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+    
+
+
+SCRIPT.JS
+
+
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    // Prevent form submission
+    event.preventDefault();
+
+    // Clear previous errors
+    clearErrors();
+
+    // Get form values
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    // Validate inputs
+    let valid = true;
+
+    if (username.length < 3 || username.length > 20) {
+        valid = false;
+        displayError('usernameError', 'Username must be between 3 and 20 characters.');
+    }
+
+    if (!validateEmail(email)) {
+        valid = false;
+        displayError('emailError', 'Invalid email address.');
+    }
+
+    if (password.length < 6) {
+        valid = false;
+        displayError('passwordError', 'Password must be at least 6 characters.');
+    }
+
+    if (password !== confirmPassword) {
+        valid = false;
+        displayError('confirmPasswordError', 'Passwords do not match.');
+    }
+
+    // If form is valid, submit it
+    if (valid) {
+        alert('Registration successful!');
+        // Here you can add code to submit the form data to the server
+    }
+});
+
+function clearErrors() {
+    document.getElementById('usernameError').textContent = '';
+    document.getElementById('emailError').textContent = '';
+    document.getElementById('passwordError').textContent = '';
+    document.getElementById('confirmPasswordError').textContent = '';
+}
+
+function displayError(id, message) {
+    document.getElementById(id).textContent = message;
+}
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+}
+
+
+STYLE.CSS
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
